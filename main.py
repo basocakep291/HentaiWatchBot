@@ -11,7 +11,7 @@ app = Client('bot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 async def start(c: app, m: types.Message):
     texto = 'O bot baiano esta acordo.'
     texto += '\n\nBot criado por [Luska1331](https://t.me/Luska1331)'
-    texto += '\nRepo do bot: [Aleatorito](https://github.com/Luska1331/aleatoricobot-python)'
+    texto += '\nRepo do bot: [HentaiWatchBoy](https://github.com/Luska1331/HentaiWatchBot)'
     await m.reply(texto, parse_mode='md', disable_web_page_preview=True)
 
 @app.on_message(filters.regex(r'^/changelog'))
