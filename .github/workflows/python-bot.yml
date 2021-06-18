@@ -1,0 +1,71 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python application
+
+env:
+  TOKEN: ${{ secrets.BOT_TOKEN }}
+  APIID: ${{ secrets.API_ID }}
+  APIHASH: ${{ secrets.API_HASH }}
+  
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 525600
+
+    steps:
+      - name: Checkouts
+        uses: actions/checkout@master
+        
+      - name: Set up Python 3.8.5
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8.5
+
+      - name: Setup git Environment
+        run: |
+          git config --global user.name "Luska1331"
+          git config --global user.email "lluuccminepe@gmail.com"
+          git config --global pull.rebase false
+      - name: Install tools/packages
+        continue-on-error: true
+        timeout-minutes: 5
+        run: |
+          sudo -E apt-get -qq update
+          sudo -E apt-get install expect
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Clone repo
+        continue-on-error: true
+        run: |
+          mkdir tmp && cd tmp
+          git clone https://github.com/Luska1331/aleatoricobot-python.git aleatoricobot
+        
+      - name: Run the bot
+        continue-on-error: true
+        timeout-minutes: 360
+        run: |
+          python main.py
+          
+      - name: Re-run Botgay workflow
+        continue-on-error: true
+        run: |
+          cd tmp/aleatoricobot
+          git commit --allow-empty -s -m "[LOOP] Re-run Botgay workflow"
+          expect -c "
+          spawn git push -f
+          expect \"Username\"
+          send \"Luska1331\r\"
+          expect \"Password\"
+          send \"${{ secrets.PASSWORD }}\r\"
+          expect \"main -> main\"
+          set timeout -10
+          interact"
