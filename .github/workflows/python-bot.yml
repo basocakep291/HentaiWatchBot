@@ -47,7 +47,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir tmp && cd tmp
-          git clone https://github.com/Luska1331/aleatoricobot-python.git aleatoricobot
+          git clone https://github.com/Luska1331/HentaiWatchBot hentaibot
         
       - name: Run the bot
         continue-on-error: true
@@ -58,8 +58,8 @@ jobs:
       - name: Re-run Botgay workflow
         continue-on-error: true
         run: |
-          cd tmp/aleatoricobot
-          git commit --allow-empty -s -m "[LOOP] Re-run Botgay workflow"
+          cd tmp/hentaibot
+          git commit --allow-empty -s -m "[LOOP] Re-run HentaiWatchBot workflow"
           expect -c "
           spawn git push -f
           expect \"Username\"
