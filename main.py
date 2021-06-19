@@ -62,7 +62,7 @@ async def echo(c: app,m: types.Message):
     await m.reply(arg, parse_mode='md', disable_web_page_preview=True, disable_notification=True)
 
 @app.on_message(filters.regex(r'^/nhentai (?P<text>.+)'))
-async def pornhub(c: app, m: types.Message):
+async def nhentai(c: app, m: types.Message):
     mensagem = m.matches[0]['text']
     if mensagem:
         if mensagem.isdecimal():
@@ -85,7 +85,7 @@ async def pornhub(c: app, m: types.Message):
             await m.reply('Digita um numero, seu animal.')
 
 @app.on_message(filters.regex('^/nhentai'))
-async def nhentai(c: app, m: types.Message):
+async def randomnhentai(c: app, m: types.Message):
     from hentai import Hentai, Format, Utils
     nid = Utils.get_random_id()
     doujin = Hentai(nid)
