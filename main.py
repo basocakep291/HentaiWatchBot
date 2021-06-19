@@ -1,6 +1,8 @@
 from pyrogram import Client, filters, types
 import os
 
+sudolist = [1853611480]
+
 API_ID = os.getenv('APIID')
 API_HASH = os.getenv('APIHASH')
 BOT_TOKEN = os.getenv('TOKEN')
@@ -9,22 +11,38 @@ app = Client('bot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 @app.on_message(filters.regex(r'^/start'))
 async def start(c: app, m: types.Message):
-    texto = 'O bot baiano esta acordo.'
-    texto += '\n\nBot criado por [Luska1331](https://t.me/Luska1331)'
-    texto += '\nRepo do bot: [HentaiWatchBoy](https://github.com/Luska1331/HentaiWatchBot)'
+    texto = 'O HentaiWatchBot esta ativo.'
+    texto += '\n\nQualquer duvida, olhe o /help.'
+    await m.reply(texto)
+
+@app.on_message(filters.regex(r'^/about'))
+async def aboutbot(c: Client, m: types.Message):
+    texto = 'Informações sobre o bot:'
+    texto += '\nBot criado por [Luska1331](https://t.me/Luska1331)'
+    texto += '\nRepo do bot: [HentaiWatchBot](https://github.com/Luska1331/HentaiWatchBot)'
     await m.reply(texto, parse_mode='md', disable_web_page_preview=True)
+
 
 @app.on_message(filters.regex(r'^/changelog'))
 async def changelog(c: app, m: types.Message):
-    texto = '<code>/changelod</code> foi adicionado, uso global'
-    texto += '<code>/getnhentai</code> foi adicionado como teste, uso somente no privado.'
-    texto += '<code>/nhentai</code> foi adicionado como teste, uso global.' 
-    await m.reply(texto)
+    texto = '\n-> <code>/about</code> adicionado.'
+    texto += '\n-> <code>/changelog</code> foi adicionado, uso global'
+    texto += '\n-> <code>/getnhentai</code> foi adicionado como teste, uso somente no privado.'
+    texto += '\n-> <code>/nhentai</code> foi adicionado como teste, uso global.' 
+    await m.reply(texto, parse_mode='html')
     
+@app.on_message(filters.regex('^/help'))
+async def command_help(c: app, m: types.Message):
+    texto = '\n<code>/getnhentai (ID)</code> -> Lhe envia as paginas do ID enviado.'
+    texto += '\n<code>/nhentai (ID)</code> -> Lhe envia a capa juntamente com informaçoes basicas do ID definido.'
+    texto += '\n<code>/nhentai</code> -> Lhe envia a capa juntamente com informaçoes basicas do hentai escolhido randomicamente.'
+    texto += '\n<code>/changelog</code> -> Lhe envia uma lista com as ultimas mudanças no bot.'
+    await m.reply(texto, parse_mode='html')
+
 @app.on_message(filters.regex(r'^/shell (?P<text>.+)'))
 async def shell(c: app, m: types.Message):
     import os
-    if m.from_user.id == 1853611480:
+    if m.from_user.id in sudolist:
         code = m.matches[0]['text']
         import subprocess
         output = subprocess.getoutput(f'{code}')
