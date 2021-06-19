@@ -71,7 +71,7 @@ async def pornhub(c: app, m: types.Message):
                 nid = mensagem
                 doujin = Hentai(nid)
                 texto = f'Data de Upload: <code>{doujin.upload_date}</code>'
-                texto += f'Titulo: {doujin.title()}'
+                texto += f'\nTitulo: {doujin.title()}'
                 texto += f'\nID: <code>{nid}</code>'
                 texto += f'\nTags: '
                 for tag in doujin.tag:
@@ -79,8 +79,6 @@ async def pornhub(c: app, m: types.Message):
                 texto += f'\nLink: {doujin.url}'
                 photo = doujin.cover
                 await m.reply_photo(photo, caption=texto, parse_mode='HTML')
-                texto += f'\nPedido do(a) {m.from_user.mention}'
-                await c.send_photo(chat_id='-1001166306279', photo=photo, caption=texto, parse_mode='html')
             except:
                 await m.reply('ID invalido, tente novamente, seu corno.')
         else:
@@ -92,7 +90,7 @@ async def nhentai(c: app, m: types.Message):
     nid = Utils.get_random_id()
     doujin = Hentai(nid)
     texto = f'Data de Upload: <code>{doujin.upload_date}</code>'
-    texto += f'Titulo: {doujin.title()}'
+    texto += f'\nTitulo: {doujin.title()}'
     texto += f'\nID: <code>{nid}</code>'
     texto += f'\nTags: '
     for tag in doujin.tag:
@@ -100,9 +98,6 @@ async def nhentai(c: app, m: types.Message):
     texto += f'\nLink: {doujin.url}'
     photo = doujin.cover
     await m.reply_photo(photo, caption=texto, parse_mode='HTML')
-    texto += f'\nPedido do(a) {m.from_user.mention}'
-    await c.send_photo(chat_id='-1001166306279', photo=photo, caption=texto)
-
 @app.on_message(filters.regex(r'^/getnhentai (?P<text>.+)'))
 async def getnhentai(c: app, m: types.Message):
     nhentai = m.matches[0]['text']
