@@ -71,7 +71,7 @@ async def pornhub(c: app, m: types.Message):
                 nid = mensagem
                 doujin = Hentai(nid)
                 texto = f'Data de Upload: <code>{doujin.upload_date}</code>'
-                texto = f'Titulo: {doujin.title()}'
+                texto += f'Titulo: {doujin.title()}'
                 texto += f'\nID: <code>{nid}</code>'
                 texto += f'\nTags: '
                 for tag in doujin.tag:
@@ -92,7 +92,7 @@ async def nhentai(c: app, m: types.Message):
     nid = Utils.get_random_id()
     doujin = Hentai(nid)
     texto = f'Data de Upload: <code>{doujin.upload_date}</code>'
-    texto = f'Titulo: {doujin.title()}'
+    texto += f'Titulo: {doujin.title()}'
     texto += f'\nID: <code>{nid}</code>'
     texto += f'\nTags: '
     for tag in doujin.tag:
